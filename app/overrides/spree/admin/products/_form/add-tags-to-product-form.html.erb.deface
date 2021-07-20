@@ -1,0 +1,21 @@
+<!-- insert_after 'div[data-hook="admin_product_form_option_types"]' -->
+<div data-hook="admin_product_form_tag_list">
+  <%= f.field_container :tag_list, class: ['form-group'] do %>
+    <%= f.label :tag_list, Spree.t(:tags) %>
+    <%= f.select :tag_list,
+                 options_for_select(@product.tag_list, @product.tag_list),
+                 { include_hidden: true },
+                 multiple: true,
+                 class: 'tag_picker select2-hidden-accessible' %>
+  <% end %>
+</div>
+<div data-hook="admin_product_form_admin_tag_list">
+  <%= f.field_container :tag_list, class: ['form-group'] do %>
+    <%= f.label :admin_tag_list, Spree.t(:admin_tags) %>
+    <%= f.select :admin_tag_list,
+                 options_for_select(@product.admin_tag_list, @product.admin_tag_list),
+                 { include_hidden: true },
+                 multiple: true,
+                 class: 'tag_picker select2-hidden-accessible' %>
+  <% end %>
+</div>

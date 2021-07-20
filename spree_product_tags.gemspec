@@ -26,6 +26,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'spree_backend', spree_version
   s.add_dependency 'spree_extension'
   s.add_dependency 'acts-as-taggable-on'
+  s.add_dependency 'deface'
 
   s.add_development_dependency 'spree_dev_tools'
+  s.add_development_dependency 'spree_auth_devise'
 end

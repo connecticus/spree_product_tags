@@ -3,8 +3,12 @@ module SpreeProductTags
     class InstallGenerator < Rails::Generators::Base
       class_option :migrate, type: :boolean, default: true
 
+      def add_javascripts
+        append_file 'vendor/assets/javascripts/spree/backend/all.js', "//= require spree/backend/tag_picker\n"
+      end
+
       def add_migrations
-        run 'bundle exec rake railties:install:migrations FROM=spree_product_tags'
+        run 'bundle exec rake acts_as_taggable_on_engine:install:migrations'
       end
 
       def run_migrations
