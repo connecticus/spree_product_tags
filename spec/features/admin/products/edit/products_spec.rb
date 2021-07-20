@@ -12,7 +12,7 @@ describe 'Product Details', type: :feature, js: true do
     end
 
     it 'handles tag changes' do
-      select2 'example-tag', from: 'div[data-hook="admin_product_form_tag_list"]'
+      select2 'example-tag', from: 'div[data-hook="admin_product_form_tag_list"] .tag_picker'
       wait_for_ajax
       wait_for { !page.has_button?('Update') }
       click_button 'Update'

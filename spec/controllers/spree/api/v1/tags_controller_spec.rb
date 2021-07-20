@@ -5,7 +5,7 @@ module Spree
     render_views
 
     let!(:tag) { create(:tag) }
-    let(:base_attributes) { Api::ApiHelpers.tag_attributes }
+    let(:base_attributes) { [:id, :name] }
 
     before do
       stub_authentication!
@@ -31,7 +31,7 @@ module Spree
 
       it 'retrieves a list of tags' do
         api_get :index
-        expect(json_response['tags'].first).to have_attributes(base_attributes)
+        expect(json_response['tags'].first).to match({"id": tag.id, "name": tag.name})
         expect(json_response['total_count']).to eq(1)
         expect(json_response['current_page']).to eq(1)
         expect(json_response['pages']).to eq(1)
@@ -40,7 +40,7 @@ module Spree
 
       it 'retrieves a list of tags by id' do
         api_get :index, ids: [tag.id]
-        expect(json_response['tags'].first).to have_attributes(base_attributes)
+        expect(json_response['tags'].first).to match({"id": tag.id, "name": tag.name})
         expect(json_response['total_count']).to eq(1)
         expect(json_response['current_page']).to eq(1)
         expect(json_response['pages']).to eq(1)
@@ -50,8 +50,7 @@ module Spree
       it 'retrieves a list of tags by ids string' do
         second_tag = create(:tag)
         api_get :index, ids: [tag.id, second_tag.id].join(',')
-        expect(json_response['tags'].first).to have_attributes(base_attributes)
-        expect(json_response['tags'][1]).to have_attributes(base_attributes)
+        expect(json_response['tags']).to match_array([{id: tag.id, name: tag.name}, {id: second_tag.id, name: second_tag.name}])
         expect(json_response['total_count']).to eq(2)
         expect(json_response['current_page']).to eq(1)
         expect(json_response['pages']).to eq(1)
@@ -63,7 +62,7 @@ module Spree
 
         it 'can select the next page of tags' do
           api_get :index, page: 2, per_page: 1
-          expect(json_response['tags'].first).to have_attributes(base_attributes)
+          expect(json_response['tags'].first.keys).to match_array(%w[id name])
           expect(json_response['total_count']).to eq(2)
           expect(json_response['current_page']).to eq(2)
           expect(json_response['pages']).to eq(2)
@@ -79,9 +78,9 @@ module Spree
       end
 
       it 'can search for tags' do
-        create(:tag, name: 'The best tag in the world')
+        tag2 = create(:tag, name: 'The best tag in the world')
         api_get :index, q: { name_cont: 'best' }
-        expect(json_response['tags'].first).to have_attributes(base_attributes)
+        expect(json_response['tags'].first).to match({"id": tag2.id, "name": tag2.name})
         expect(json_response['count']).to eq(1)
       end
     end

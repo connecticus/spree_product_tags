@@ -5,9 +5,9 @@ module Spree
         def index
           @tags =
             if params[:ids]
-              Tag.accessible_by(current_ability).where(id: params[:ids].split(',').flatten)
+              Tag.where(id: params[:ids].split(',').flatten)
             else
-              Tag.accessible_by(current_ability).ransack(params[:q]).result
+              Tag.ransack(params[:q]).result
             end
 
           @tags = @tags.page(params[:page]).per(params[:per_page])
