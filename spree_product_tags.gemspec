@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.name        = 'spree_product_tags'
   s.version     = SpreeProductTags.version
   s.summary     = 'Add support for Product tags that were removed in Spree 4.0'
-  s.required_ruby_version = '>= 2.5'
+  s.required_ruby_version = '>= 2.4'
 
   s.author    = 'Jimmy Stenke'
   s.email     = 'jimmy@stenke.org'
@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  spree_version = '>= 4.2.0', '< 6.0'
+  spree_version = '>= 3.7', '< 6.0'
   s.add_dependency 'spree_core', spree_version
   s.add_dependency 'spree_api', spree_version
   s.add_dependency 'spree_backend', spree_version
